@@ -113,6 +113,13 @@ jobs:
           echo "~/godot-editor" >> $GITHUB_PATH
 
       - if: ${{ steps.cache-template.outputs.cache-hit != 'true' }}
+        name: Download and extract ANGLE static libraries
+        run: |
+          mkdir -v -p ~/angle
+          wget -q https://github.com/godotengine/godot-angle-static/releases/download/chromium%2F6601.2/godot-angle-static-x86_64-gcc-release.zip
+          unzip godot-angle-static-x86_64-gcc-release.zip -d ~/angle
+
+      - if: ${{ steps.cache-template.outputs.cache-hit != 'true' }}
         name: Install dependencies
         run: |
           sudo apt install -y scons python3
@@ -140,7 +147,7 @@ jobs:
         name: Build Godot template for Windows
         run: |
           cd godot
-          scons p=windows ${BUILD_OPTIONS}
+          scons p=windows angle_libs=~/angle ${BUILD_OPTIONS} module_astcenc_enabled=yes d3d12=yes
           mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}/
           mv ./bin/godot.windows.template_release.x86_64.exe ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}/windows_release_x86_64.exe
 
