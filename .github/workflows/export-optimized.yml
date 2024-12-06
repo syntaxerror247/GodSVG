@@ -147,7 +147,7 @@ jobs:
         name: Build Godot template for Windows
         run: |
           cd godot
-          scons p=windows angle_libs=~/angle ${BUILD_OPTIONS} module_astcenc_enabled=yes d3d12=yes
+          scons p=windows angle_libs=~/angle ${BUILD_OPTIONS} module_astcenc_enabled=yes
           mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}/
           mv ./bin/godot.windows.template_release.x86_64.exe ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}/windows_release_x86_64.exe
 
