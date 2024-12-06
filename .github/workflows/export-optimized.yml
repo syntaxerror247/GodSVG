@@ -123,7 +123,7 @@ jobs:
         name: Install dependencies
         run: |
           sudo apt install -y scons python3
-          sudo apt install -y gcc-mingw-w64
+          sudo apt install -y g++-mingw-w64-x86-64-posix
           sudo apt install -y --fix-missing wine64
           wget -q https://github.com/electron/rcedit/releases/download/v2.0.0/rcedit-x64.exe
           mkdir -p ~/.local/share/rcedit
@@ -147,7 +147,7 @@ jobs:
         name: Build Godot template for Windows
         run: |
           cd godot
-          scons p=windows angle_libs=~/angle ${BUILD_OPTIONS} module_astcenc_enabled=yes
+          scons p=windows angle_libs=~/angle module_astcenc_enabled=yes
           mkdir -p ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}/
           mv ./bin/godot.windows.template_release.x86_64.exe ~/.local/share/godot/export_templates/${GODOT_VERSION}.${GODOT_RELEASE}/windows_release_x86_64.exe
 
