@@ -139,7 +139,7 @@ jobs:
         run: |
           cd ~/angle
           ./update_angle.sh
-          scons p=windows use_mingw=yes arch=x86_64
+          scons platform=windows use_mingw=yes arch=x86_64
           mkdir -p ~/angle/build
           ls ~/angle/build
 
