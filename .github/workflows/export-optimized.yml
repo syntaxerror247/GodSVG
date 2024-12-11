@@ -330,6 +330,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PLATFORM: "Android"
+      GODOT_ANDROID_KEYSTORE_RELEASE_PATH: "/tmp/release.keystore"
+      GODOT_ANDROID_KEYSTORE_RELEASE_USER: ${{ secrets.KEY_ALIAS }}
+      GODOT_ANDROID_KEYSTORE_RELEASE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
     steps:
       - name: Cache Template
         id: cache-template
@@ -380,7 +383,7 @@ jobs:
 
       - name: Decode keystore
         run: |
-          echo "${{ secrets.KEYSTORE }}" | base64 -d > release.keystore
+          echo "${{ secrets.KEYSTORE }}" | base64 -d > /tmp/release.keystore
       
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -391,10 +394,7 @@ jobs:
         run: |
           cd godsvg
           mkdir -p build/android
-          godot --headless --export-release "Android" build/GodSVG.apk \
-            --keystore release.keystore \
-            --keystore_password "${{ secrets.KEYSTORE_PASSWORD }}" \
-            --key_alias "${{ secrets.KEY_ALIAS }}"
+          godot --headless --export-release "Android" build/GodSVG.apk
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
